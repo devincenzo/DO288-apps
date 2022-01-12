@@ -12,8 +12,10 @@ config_s2i
 echo "customization start here"
 cp -Rf /tmp/src/*.html ./
 DATA=$(date "+%Y-%m-%d")
-echo "page build on $DATA" >> ./info.html
-echo "sed vivi vivi" >> ./info.html
+echo "creating info page"
+echo "Page build on $DATA" >> ./info.html
+echo "detto in latino" >> ./info.html
+
 
 ####### CUSTOMIZATION ENDS HERE ############
 
