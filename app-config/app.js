@@ -12,7 +12,7 @@ app.get('/', function (req, res) {
     response = 'Value in the APP_MSG env var is => ' + msg + '\n';
 
     // Read in the secret file
-    fs.readFile('~/DO288-apps/app-config/myapp.sec', 'utf8', function (secerr,secdata) {
+    fs.readFile('/home/user/DO288-apps/app-config/myapp.sec', 'utf8', function (secerr,secdata) {
         if (secerr) {
             console.log(secerr + '\n');
             response += secerr + '\n';
