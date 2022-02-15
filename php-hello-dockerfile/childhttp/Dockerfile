@@ -1,3 +1,3 @@
-FROM quay.io/devincenzo/parenthtt
+FROM quay.io/devincenzo/parenthttp
 
 
