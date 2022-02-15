@@ -1,3 +1,3 @@
-FROM quay.io/devincenzo/httpdvd
+FROM quay.io/devincenzo/parenthtt
 
-ONBUILD COPY src/ ./
+
