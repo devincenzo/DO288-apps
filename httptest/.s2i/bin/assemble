@@ -3,7 +3,7 @@
 
 
 
-cp -Rf /tmp/src/*.html ./opt/rh/httpd24/root/var/www/html
+cp -Rf /tmp/src/*.html /opt/rh/httpd24/root/var/www/html
 
 echo "CUSTOMIZATION START HERE"
 
