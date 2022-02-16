@@ -3,7 +3,7 @@
 
 
 
-cp -Rf /tmp/src/. ./
+cp -Rf /tmp/src/*.html ./
 
 echo "CUSTOMIZATION START HERE"
 
