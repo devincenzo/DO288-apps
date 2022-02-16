@@ -8,8 +8,8 @@ cp -Rf /tmp/src/*.html /opt/rh/httpd24/root/var/www/html
 echo "CUSTOMIZATION START HERE"
 
 DATA=$(date "+%Y-%m-%d")
-echo "page build on $DATA" >> ./info.html
-echo "frase latino" >> ./info.html
+echo "page build on $DATA" >> /opt/rh/httpd24/root/var/www/html/info.html
+echo "frase latino" >> /opt/rh/httpd24/root/var/www/html/info.html
 
 
 echo "CUSTOMIZATION END HERE"
