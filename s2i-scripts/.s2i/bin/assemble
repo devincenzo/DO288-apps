@@ -10,7 +10,7 @@ config_s2i
 
 ######## CUSTOMIZATION STARTS HERE ############
 echo "customization start here"
-cp -Rf /tmp/src/*.html ./
+cp -Rf /tmp/src/ ./
 DATA=$(date "+%Y-%m-%d")
 echo "creating info page"
 echo "Page build on $DATA" >> ./info.html
