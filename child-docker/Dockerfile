@@ -1,0 +1,4 @@
+FROM quay.io/redhattraining/http-parent
+
+
+
