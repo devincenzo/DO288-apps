@@ -1,4 +1,1 @@
-FROM quay.io/redhattraining/http-parent
-
-
-
+FROM quay.io/piacesse/child-http
