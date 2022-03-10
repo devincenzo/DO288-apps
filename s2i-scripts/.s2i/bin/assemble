@@ -10,13 +10,11 @@ config_s2i
 
 ######## CUSTOMIZATION STARTS HERE ############
 cp -Rf /tmp/src/*.html ./
-echo "customization start-here"
+echo "customization start here"
 DATA=$(date "+%Y-%m-%d")
 echo "Page built on $DATA" >> ./info.html
-echo "frase latina latina" >> ./info.html
-echo "customization end-here"
-
-
+echo "frase in latino" >> ./info.html
+echo "customization end here"
 ####### CUSTOMIZATION ENDS HERE ############
 
 if [ -d ./httpd-cfg ]; then
