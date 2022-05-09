@@ -26,13 +26,13 @@ RUN mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources && mkdir /opt/ibm/wlp
 	mkdir /opt/ibm/wlp/usr/servers/defaultServer/BEAM && mkdir /opt/ibm/wlp/usr/servers/defaultServer/BEAM/logs 
 	
 	
-ADD  ./oraclejdbc /opt/ibm/wlp/usr/servers/defaultServer/resources/oraclejdbc
+ADD --chown=1001:0 ./resources/oraclejdbc /opt/ibm/wlp/usr/servers/defaultServer/resources/oraclejdbc
 
-ADD  ./jmsLib /opt/ibm/wlp/usr/servers/defaultServer/resources/jmsLib
+ADD --chown=1001:0 ./resources/jmsLib /opt/ibm/wlp/usr/servers/defaultServer/resources/jmsLib
 
-ADD  ./lib /opt/ibm/wlp/usr/servers/defaultServer/resources/lib
+ADD --chown=1001:0 ./resources/lib /opt/ibm/wlp/usr/servers/defaultServer/resources/lib
 
-ADD  ./properties /opt/ibm/wlp/usr/servers/defaultServer/resources/properties
+ADD --chown=1001:0 ./resources/properties/sviluppo /opt/ibm/wlp/usr/servers/defaultServer/resources/properties/sviluppo
 
 
 #RUN chmod 777 /opt/ibm/wlp/usr/servers/defaultServer/BEAM/logs

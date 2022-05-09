@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logdir">/opt/ibm/wlp/usr/servers/defaultServer/BEAM/logs</Property>
+        <Property name="layout">%d %-5p [%-30F] Thread id: %-3T - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
+            <PatternLayout pattern="${layout}" />
+        </Console>
+        <RollingFile
+            name="RollingLogFile"
+            fileName="${logdir}/WasteIntegration.log"
+            filePattern="${logdir}/WasteIntegration-%i.log">
+            <PatternLayout pattern="${layout}" />
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="20 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+        <Async name="Async">
+            <AppenderRef ref="RollingLogFile"/>
+            <AppenderRef ref="Console"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.ibm.waste.base" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.wfmcommon" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.wfmint" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.tcpcommon" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.tcpint" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+
+        <!-- persistence -->
+        <Logger name="com.ibm.waste.base.persistence" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.wfmcommon.persistence" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.wfmint.persistence" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.tcpcommon.persistence" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+        <Logger name="com.ibm.waste.tcpint.persistence" level="DEBUG" additivity="false" ignoreExceptions="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Logger>
+
+        <!-- root -->
+        <Root level="error">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingLogFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
