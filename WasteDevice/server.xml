@@ -110,7 +110,7 @@
 		maxIdleTime="60m" />
 	
 	<resourceAdapter id="activemq"
-		location="${server.output.dir}/resources/jmsLib/activemq-rar-5.16.3.rar">
+		location="${server.config.dir}/resources/jmsLib/activemq-rar-5.16.3.rar">
 		<properties.activemq
 			serverUrl="${QM_PROTOCOL}://${QM_HOSTNAME}:${QM_PORT}"
 			userName="${QM_USER}"
