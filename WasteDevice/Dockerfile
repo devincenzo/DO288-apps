@@ -9,7 +9,7 @@ RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then mkdir /opt/ibm/wlp/etc/ \
     localConnector-1.0 microProfile-1.0 microProfile-1.2 microProfile-1.3 microProfile-1.4 monitor-1.0 restConnector-1.0 \
     requestTiming-1.0 restConnector-2.0 sessionDatabase-1.0 sessionCache-1.0 ssl-1.0 transportSecurity-1.0 \
     webCache-1.0 webProfile-7.0 appSecurityClient-1.0 javaee-7.0 javaeeClient-7.0 jpa-2.0\
-	jms-2.0 wmqJmsClient-2.0 ejbPersistentTimer-3.2 \
+	jms-2.0 ejbPersistentTimer-3.2 \
   && if [ ! -z $REPOSITORIES_PROPERTIES ]; then rm /opt/ibm/wlp/etc/repositories.properties; fi \
   && rm -rf /output/workarea /output/logs \
   && chmod -R g+rwx /opt/ibm/wlp/output/*

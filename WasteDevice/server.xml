@@ -12,7 +12,7 @@
         <feature>jndi-1.0</feature>
         <feature>localConnector-1.0</feature>
         <feature>servlet-3.1</feature>
-        <feature>wmqJmsClient-2.0</feature>
+    <!--    <feature>wmqJmsClient-2.0</feature>  -->
     </featureManager>
 
 	<!-- This template enables security. To get the full use of all the capabilities, 
@@ -43,8 +43,9 @@
 	<jndiEntry jndiName="serverName" value="${wlp.server.name}"/>
 	<jndiEntry jndiName="outputDir" value="${server.output.dir}"/>
 	
+	<!--
 	 <variable name="wmqJmsClient.rar.location" value="${server.config.dir}/resources/jmsLib/wmq.jmsra-9.2.3.0.rar"/>
-	
+	-->
 	<!-- 
 	********	SHARED LIB AND PROPERTIES 	**********
 	-->
@@ -92,7 +93,80 @@
    
     <transaction clientInactivityTimeout="360s" heuristicRetryInterval="0" heuristicRetryWait="0" propogatedOrBMTTranLifetimeTimeout="2700s" recoverOnStartup="true" totalTranLifetimeTimeout="2700s"/>
   
+    <!--
+	***********   AMQ ********
+	-->
+	
+	<!-- definizione Connection Factory AMQ -->
+    
+	<connectionManager
+		id="myConnMgrMM"
+		maxPoolSize="400"
+		minPoolSize="10"
+		connectionTimeout="180s"
+		agedTimeout="0"
+		reapTime="3m"
+		purgePolicy="EntirePool"
+		maxIdleTime="60m" />
+	
+	<resourceAdapter id="activemq"
+		location="${server.output.dir}/resources/jmsLib/activemq-rar-5.16.3.rar">
+		<properties.activemq
+			serverUrl="${QM_PROTOCOL}://${QM_HOSTNAME}:${QM_PORT}"
+			userName="${QM_USER}"
+			password="${QM_PASSWORD}"/>
+	</resourceAdapter>
+	
+	<jmsQueueConnectionFactory jndiName="jms/WASTES_QUEUE">
+		<properties.activemq
+			serverUrl="${QM_PROTOCOL}://${QM_HOSTNAME}:${QM_PORT}"
+			userName="${QM_USER}"
+			password="${QM_PASSWORD}"/>
+	</jmsQueueConnectionFactory>
+	
+	<jmsTopicConnectionFactory jndiName="jms/WASTES_TOPIC">
+		<properties.activemq
+			serverUrl="${QM_PROTOCOL}://${QM_HOSTNAME}:${QM_PORT}"
+			userName="${QM_USER}"
+			password="${QM_PASSWORD}"/>
+	</jmsTopicConnectionFactory>
+    
+    <!--  definizione code e topic AMQ -->
+    
+    
+    <!--  QUEUE -->
   
+	<jmsQueue id="jms/CONF_ECOS_QOutput" jndiName="jms/CONF_ECOS_QOutput">
+	    <properties.activemq
+	     PhysicalName="CONF_ECOS_QOutput"/>
+	</jmsQueue>
+	<jmsActivationSpec id="jms/CONF_ECOS_Q_AS">
+	    <properties.activemq 
+    	    destination="jms/CONF_ECOS_QOutput"
+			destinationType="javax.jms.Queue"
+			maxSessions="10"/>
+	</jmsActivationSpec>
+    
+    
+    
+    <!--  TOPICS -->
+	<jmsTopic id="jms/CONS_STATO" jndiName="jms/CONS_STATO">
+	    <properties.activemq
+	     PhysicalName="CONS/STATO"/>
+	</jmsTopic>
+	<jmsActivationSpec id="jms/CONS_STATO_AS">
+	    <properties.activemq
+	        destination="jms/CONS_STATO"
+			destinationType="javax.jms.Topic"
+			maxSessions="10"/>
+	</jmsActivationSpec>
+	
+	
+	
+	<!--
+	********** FINE AMQ *******
+	-->
+	
 
 	<!-- 
 	********	MQ 	**********
@@ -111,22 +185,29 @@
 	
 	<!--  definizione Connection Factory -->
 
+    <!--
 	<connectionManager agedTimeout="0" connectionTimeout="180s" id="ConMgr6" maxIdleTime="30m" maxPoolSize="30" minPoolSize="2" purgePolicy="EntirePool" reapTime="3m"/>
+	-->
 	
 	<!-- CONNFACTORY FOR QUEUE -->
-    <jmsQueueConnectionFactory connectionManagerRef="ConMgr6" id="WFM_QUEUE_CF" jndiName="jms/WASTES_QUEUE">
+    <!--
+	<jmsQueueConnectionFactory connectionManagerRef="ConMgr6" id="WFM_QUEUE_CF" jndiName="jms/WASTES_QUEUE">
    		<properties.wmqJms channel="${QM_CHANNEL}" hostName="${QM_HOSTNAME}" port="${QM_PORT}" queueManager="${QM_NAME}" transportType="CLIENT"/>
     </jmsQueueConnectionFactory>
+	-->
 	
 	<!-- CONNFACTORY FOR TOPIC -->
+	<!--
 	<jmsTopicConnectionFactory connectionManagerRef="ConMgr6" id="WFM_TOPIC_CF" jndiName="jms/WASTES_TOPIC">
    		<properties.wmqJms channel="${QM_CHANNEL}" hostName="${QM_HOSTNAME}" port="${QM_PORT}" queueManager="${QM_NAME}" transportType="CLIENT"/>
     </jmsTopicConnectionFactory>
-    
+    -->
 	
     <!--  definizione code e topic -->
     
     <!--  QUEUE -->
+	
+	<!--
     <jmsQueue id="jms/WDO_QInput" jndiName="jms/WDO_QInput">
 	    <properties.wmqJms baseQueueManagerName="${QM_NAME}" baseQueueName="WDO_QInput"/>
 	</jmsQueue>
@@ -286,8 +367,9 @@
 	<jmsQueue id="jms/CONF_ECOS_QOutput" jndiName="jms/CONF_ECOS_QOutput">
 	    <properties.wmqJms baseQueueManagerName="${QM_NAME}" baseQueueName="CONF_ECOS_QOutput"/>
 	</jmsQueue>
-	
+	-->
 	<!--  TOPICS -->
+	<!--
 	<jmsTopic id="jms/CONS_STATO" jndiName="jms/CONS_STATO">
 	    <properties.wmqJms baseTopicName="CONS/STATO" brokerPubQueueManager="${QM_NAME}"/>
 	</jmsTopic>
@@ -318,11 +400,12 @@
 	<jmsTopic id="jms/CONS_ECOSTATION" jndiName="jms/CONS_ECOSTATION">
 	    <properties.wmqJms baseTopicName="CONS/ECOSTATION" brokerPubQueueManager="${QM_NAME}"/>
 	</jmsTopic>
-	
+	-->
 
     <!--  definizione activation spec -->
     
     <!-- QUEUE AS-->
+	<!--
     <jmsActivationSpec id="jms/ANAGR_SDC_Q_AS">
 	    <properties.wmqJms channel="${QM_CHANNEL}" destinationRef="jms/ANAGR_SDC_QInput" destinationType="javax.jms.Queue" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" transportType="CLIENT"/>
 	</jmsActivationSpec>
@@ -404,8 +487,9 @@
 	<jmsActivationSpec id="jms/CONF_ECOS_Q_AS">
 	    <properties.wmqJms channel="${QM_CHANNEL}" destinationRef="jms/CONF_ECOS_QOutput" destinationType="javax.jms.Queue" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" transportType="CLIENT"/>
 	</jmsActivationSpec>
-	
+	-->
 	<!-- TOPIC AS-->
+	<!--
 	<jmsActivationSpec id="jms/CONS_STATO_AS">
 	    <properties.wmqJms channel="${QM_CHANNEL}" clientId="CONS_STATO-1" destinationRef="jms/CONS_STATO" destinationType="javax.jms.Topic" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" subscriptionDurability="Durable" subscriptionName="libertyServer" transportType="CLIENT"/>
 	</jmsActivationSpec>
@@ -436,7 +520,7 @@
 	<jmsActivationSpec id="jms/CONS_DOTAZIONI_AS">
 	    <properties.wmqJms channel="${QM_CHANNEL}" clientId="CONS_DOTAZIONI-1" destinationRef="jms/CONS_DOTAZIONI" destinationType="javax.jms.Topic" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" subscriptionDurability="Durable" subscriptionName="libertyServer" transportType="CLIENT"/>
 	</jmsActivationSpec>
-
+     -->
 
 	<!-- To access this server from a remote client add a host attribute to 
 		the following element, e.g. host="*" -->
