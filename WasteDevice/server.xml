@@ -55,11 +55,14 @@
     <library id="WFMResource">
 	    <fileset dir="${server.config.dir}/resources/lib" includes="*.jar" scanInterval="5s"/>
     </library> 
-    
+    <!--
     <library id="OracleLib">
     	<fileset dir="${server.config.dir}/resources/oraclejdbc" includes="*.jar" scanInterval="5s"/>
     </library>
-    
+    -->
+	 <library id="postgresLib">
+    	<fileset dir="${server.config.dir}/resources/postgresLib" id="PostgreSQLFileset" includes="*.jar" scanInterval="5s"/>
+    </library>
     <library id="properties">
 		<folder dir="${server.config.dir}/resources/properties/sviluppo"/>
     </library> 
@@ -73,25 +76,58 @@
 	<!--<authData id="oracleUser" password="${DB_PASSWORD}" user="${DB_USER}"/>-->    
 	
 	<!-- DATASOURCE FOR WASTE APP -->
+	<!--
 	<dataSource enableConnectionCasting="true" id="WASTE" jdbcDriverRef="OracleJDBCDriver" jndiName="jdbc/WASTES" transactional="false">
     	<properties.oracle URL="jdbc:oracle:thin:@10.64.4.97:1521:dbjstbm" password="${DB_PASSWORD}" user="${DB_USER}"/>
     	<connectionManager connectionTimeout="180s" maxPoolSize="40" minPoolSize="1"/>
     </dataSource>
     <jdbcDriver id="OracleJDBCDriver" javax.sql.ConnectionPoolDataSource="oracle.jdbc.pool.OracleConnectionPoolDataSource" libraryRef="OracleLib">
-    </jdbcDriver>
+    </jdbcDriver>-->
     
     <!-- DATASOURCE FOR PERSISTENT TIMER -->
+	<!--
     <dataSource id="DefaultDataSource" jdbcDriverRef="OracleJDBCDriver" transactional="false">
     	<properties.oracle URL="jdbc:oracle:thin:@10.64.4.97:1521:dbjstbm" password="${DB_PASSWORD}" user="${DB_USER}"/>
     	<connectionManager connectionTimeout="180s" maxPoolSize="40" minPoolSize="1"/>
     </dataSource>
     <jdbcDriver id="OracleJDBCDriver" javax.sql.ConnectionPoolDataSource="oracle.jdbc.pool.OracleConnectionPoolDataSource" libraryRef="OracleLib">
-    </jdbcDriver>
+    </jdbcDriver>-->
     
       <!-- The following enables failover for persistent timers -->
       <!-- <persistentExecutor id="defaultEJBPersistentTimerExecutor" missedTaskThreshold="5m"/>-->
    
+   <!--
     <transaction clientInactivityTimeout="360s" heuristicRetryInterval="0" heuristicRetryWait="0" propogatedOrBMTTranLifetimeTimeout="2700s" recoverOnStartup="true" totalTranLifetimeTimeout="2700s"/>
+     -->
+  
+  
+   <!--
+	***********   POSTGRES ********
+	-->
+  
+    <!-- Definizione datasource DB INIZIO -->
+	
+	<dataSource id="WASTES" jndiName="jdbc/WASTES">
+		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
+		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresLib"/>
+		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
+	</dataSource>
+	
+	<dataSource id="DefaultDataSource">
+		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
+		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresLib"/>
+		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
+	</dataSource>
+	
+	<jdbcDriver id="postgresql-driver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresLib"/>
+		
+	
+	<transaction clientInactivityTimeout="1800s" heuristicRetryInterval="0" heuristicRetryWait="0" propogatedOrBMTTranLifetimeTimeout="2700s" recoverOnStartup="true" totalTranLifetimeTimeout="2700s"/>
+		
+	<!-- Definizione datasource DB FINE --> 
+  
+  
+  
   
     <!--
 	***********   AMQ ********
@@ -136,6 +172,7 @@
     
     <!--  QUEUE -->
   
+    <!--
 	<jmsQueue id="jms/CONF_ECOS_QOutput" jndiName="jms/CONF_ECOS_QOutput">
 	    <properties.activemq
 	     PhysicalName="CONF_ECOS_QOutput"/>
@@ -146,10 +183,12 @@
 			destinationType="javax.jms.Queue"
 			maxSessions="10"/>
 	</jmsActivationSpec>
-    
+    -->
     
     
     <!--  TOPICS -->
+	
+	<!--
 	<jmsTopic id="jms/CONS_STATO" jndiName="jms/CONS_STATO">
 	    <properties.activemq
 	     PhysicalName="CONS/STATO"/>
@@ -160,7 +199,325 @@
 			destinationType="javax.jms.Topic"
 			maxSessions="10"/>
 	</jmsActivationSpec>
+	-->
 	
+	
+	<!--  definizione code e topic -->
+    
+    <!--  QUEUE -->
+    
+    <jmsQueue id="jms/WDO_QInput" jndiName="jms/WDO_QInput">
+	    <properties.activemq PhysicalName="WDO_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/WDO_QOutput" jndiName="jms/WDO_QOutput">
+	     <properties.activemq PhysicalName="WDO_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_SDC_QInput" jndiName="jms/ANAGR_SDC_QInput">
+	    <properties.activemq PhysicalName="ANAGR_SDC_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_SDC_QOutput" jndiName="jms/ANAGR_SDC_QOutput">
+	    <properties.activemq PhysicalName="ANAGR_SDC_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_UTENTI_QInput" jndiName="jms/ANAGR_UTENTI_QInput">
+	    <properties.activemq PhysicalName="ANAGR_UTENTI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_UTENTI_QOutput" jndiName="jms/ANAGR_UTENTI_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_UTENTI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CDL_QInput" jndiName="jms/ANAGR_CDL_QInput">
+	    <properties.activemq PhysicalName="ANAGR_CDL_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CDL_QOutput" jndiName="jms/ANAGR_CDL_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_CDL_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/NOT_QInput" jndiName="jms/NOT_QInput">
+	     <properties.activemq PhysicalName="NOT_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/NOT_QOutput" jndiName="jms/NOT_QOutput">
+	     <properties.activemq PhysicalName="NOT_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_MEZZI_QInput" jndiName="jms/ANAGR_MEZZI_QInput">
+	     <properties.activemq PhysicalName="ANAGR_MEZZI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_MEZZI_QOutput" jndiName="jms/ANAGR_MEZZI_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_MEZZI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/PERCORSI_EFFETTIVI_QInput" jndiName="jms/PERCORSI_EFFETTIVI_QInput">
+	     <properties.activemq PhysicalName="PERCORSI_EFFETTIVI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/PERCORSI_EFFETTIVI_QOutput" jndiName="jms/PERCORSI_EFFETTIVI_QOutput">
+	     <properties.activemq PhysicalName="PERCORSI_EFFETTIVI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CONS_WDO_QInput" jndiName="jms/CONS_WDO_QInput">
+	     <properties.activemq PhysicalName="CONS_WDO_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CONS_WDO_QOutput" jndiName="jms/CONS_WDO_QOutput">
+	     <properties.activemq PhysicalName="CONS_WDO_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/SEGNALAZIONI_QInput" jndiName="jms/SEGNALAZIONI_QInput">
+	     <properties.activemq PhysicalName="SEGNALAZIONI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/SEGNALAZIONI_QOutput" jndiName="jms/SEGNALAZIONI_QOutput">
+	     <properties.activemq PhysicalName="SEGNALAZIONI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CDR_QInput" jndiName="jms/ANAGR_CDR_QInput">
+	     <properties.activemq PhysicalName="ANAGR_CDR_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CDR_QOutput" jndiName="jms/ANAGR_CDR_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_CDR_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_WASTECONTAINER_QInput" jndiName="jms/ANAGR_WASTECONTAINER_QInput">
+	     <properties.activemq PhysicalName="ANAGR_WASTECONTAINER_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_WASTECONTAINER_QOutput" jndiName="jms/ANAGR_WASTECONTAINER_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_WASTECONTAINER_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CHECKLIST_QInput" jndiName="jms/CHECKLIST_QInput">
+	     <properties.activemq PhysicalName="CHECKLIST_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CHECKLIST_QOutput" jndiName="jms/CHECKLIST_QOutput">
+	     <properties.activemq PhysicalName="CHECKLIST_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_PDR_QInput" jndiName="jms/ANAGR_PDR_QInput">
+	     <properties.activemq PhysicalName="ANAGR_PDR_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_PDR_QOutput" jndiName="jms/ANAGR_PDR_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_PDR_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/LOG_SAPMessages" jndiName="jms/LOG_SAPMessages">
+	     <properties.activemq PhysicalName="LOG_SAPMessages"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_UTENTI_EXT_QInput" jndiName="jms/ANAGR_UTENTI_EXT_QInput">
+	     <properties.activemq PhysicalName="ANAGR_UTENTI_EXT_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_ANAGR_SDC_QInput" jndiName="jms/TCP_ANAGR_SDC_QInput">
+	     <properties.activemq PhysicalName="TCP_ANAGR_SDC_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_ANAGR_SDC_QOutput" jndiName="jms/TCP_ANAGR_SDC_QOutput">
+	     <properties.activemq PhysicalName="TCP_ANAGR_SDC_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_BLACKLIST_QInput" jndiName="jms/TCP_BLACKLIST_QInput">
+	     <properties.activemq PhysicalName="TCP_BLACKLIST_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_BLACKLIST_QOutput" jndiName="jms/TCP_BLACKLIST_QOutput">
+	     <properties.activemq PhysicalName="TCP_BLACKLIST_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_CONF_QOutput" jndiName="jms/TCP_CONF_QOutput">
+	     <properties.activemq PhysicalName="TCP_CONF_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_CONF_QInput" jndiName="jms/TCP_CONF_QInput">
+	     <properties.activemq PhysicalName="TCP_CONF_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_AGG_SDC_QOutput" jndiName="jms/TCP_AGG_SDC_QOutput">
+	     <properties.activemq PhysicalName="TCP_AGG_SDC_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_AGG_SDC_QInput" jndiName="jms/TCP_AGG_SDC_QInput">
+	     <properties.activemq PhysicalName="TCP_AGG_SDC_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_BLACKLIST_INIBITA_QOutput" jndiName="jms/TCP_BLACKLIST_INIBITA_QOutput">
+	     <properties.activemq PhysicalName="TCP_BLACKLIST_INIBITA_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_BLACKLIST_INIBITA_QInput" jndiName="jms/TCP_BLACKLIST_INIBITA_QInput">
+	     <properties.activemq PhysicalName="TCP_BLACKLIST_INIBITA_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_BP_QInput" jndiName="jms/ANAGR_BP_QInput">
+	     <properties.activemq PhysicalName="ANAGR_BP_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_BP_QOutput" jndiName="jms/ANAGR_BP_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_BP_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CONTRATTI_QOutput" jndiName="jms/ANAGR_CONTRATTI_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_CONTRATTI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CONTRATTI_QInput" jndiName="jms/ANAGR_CONTRATTI_QInput">
+	     <properties.activemq PhysicalName="ANAGR_CONTRATTI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ALTARES_STAMPINGS_QInput" jndiName="jms/ALTARES_STAMPINGS_QInput">
+	     <properties.activemq PhysicalName="ALTARES_STAMPINGS_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/WFM_CONF_QInput" jndiName="jms/WFM_CONF_QInput">
+	     <properties.activemq PhysicalName="WFM_CONF_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/WFM_CONF_QOutput" jndiName="jms/WFM_CONF_QOutput">
+	     <properties.activemq PhysicalName="WFM_CONF_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_MEZZI_EXT_QInput" jndiName="jms/ANAGR_MEZZI_EXT_QInput">
+	     <properties.activemq PhysicalName="ANAGR_MEZZI_EXT_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_MEZZI_EXT_QOutput" jndiName="jms/ANAGR_MEZZI_EXT_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_MEZZI_EXT_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CONTRATTI_PASSIVI_QInput" jndiName="jms/ANAGR_CONTRATTI_PASSIVI_QInput">
+	     <properties.activemq PhysicalName="ANAGR_CONTRATTI_PASSIVI_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/ANAGR_CONTRATTI_PASSIVI_QOutput" jndiName="jms/ANAGR_CONTRATTI_PASSIVI_QOutput">
+	     <properties.activemq PhysicalName="ANAGR_CONTRATTI_PASSIVI_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/TCP_CONF_ISOLE_QOutput" jndiName="jms/TCP_CONF_ISOLE_QOutput">
+	     <properties.activemq PhysicalName="TCP_CONF_ISOLE_QOutput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/GIS_ITINERARI_NOTE_QInput" jndiName="jms/GIS_ITINERARI_NOTE_QInput">
+	     <properties.activemq PhysicalName="GIS_ITINERARI_NOTE_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CONF_ECOS_QInput" jndiName="jms/CONF_ECOS_QInput">
+	     <properties.activemq PhysicalName="CONF_ECOS_QInput"/>
+	</jmsQueue>
+	<jmsQueue id="jms/CONF_ECOS_QOutput" jndiName="jms/CONF_ECOS_QOutput">
+	     <properties.activemq PhysicalName="CONF_ECOS_QOutput"/>
+	</jmsQueue> 
+	
+	<!--  TOPICS -->
+	 
+	<jmsTopic id="jms/CONS_STATO" jndiName="jms/CONS_STATO">
+	    <properties.activemq PhysicalName="CONS/STATO"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_ODL" jndiName="jms/CONS_ODL">
+	     <properties.activemq PhysicalName="CONS/ODL"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_SEG" jndiName="jms/CONS_SEG">
+	     <properties.activemq PhysicalName="CONS/SEG"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_TRACKING" jndiName="jms/CONS_TRACKING">
+	     <properties.activemq PhysicalName="CONS/TRACKING"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_CHECKLIST" jndiName="jms/CONS_CHECKLIST">
+	     <properties.activemq PhysicalName="CONS/CHECKLIST"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_PESATA" jndiName="jms/CONS_PESATA">
+	     <properties.activemq PhysicalName="CONS/PESATA"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_ANOM" jndiName="jms/CONS_ANOM">
+	     <properties.activemq PhysicalName="CONS/ANOM"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_CONFERIMENTI" jndiName="jms/CONS_CONFERIMENTI">
+	     <properties.activemq PhysicalName="CONS/CONFERIMENTI"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_DOTAZIONI" jndiName="jms/CONS_DOTAZIONI">
+	     <properties.activemq PhysicalName="CONS/DOTAZIONI"/>
+	</jmsTopic>
+	<jmsTopic id="jms/CONS_ECOSTATION" jndiName="jms/CONS_ECOSTATION">
+	     <properties.activemq PhysicalName="CONS/ECOSTATION"/>
+	</jmsTopic>   
+	
+
+    <!--  definizione activation spec -->
+    
+    <!-- QUEUE AS-->
+   
+    <jmsActivationSpec id="jms/ANAGR_SDC_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_SDC_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_UTENTI_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_UTENTI_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_CDL_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_CDL_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/WDO_Q_AS">
+	    <properties.activemq destination="jms/WDO_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_MEZZI_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_MEZZI_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/NOT_Q_AS">
+	    <properties.activemq destination="jms/NOT_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_WDO_Q_AS">
+	    <properties.activemq destination="jms/CONS_WDO_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/SEGNALAZIONI_Q_AS">
+	    <properties.activemq destination="jms/SEGNALAZIONI_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_CDR_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_CDR_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_WASTECONTAINER_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_WASTECONTAINER_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_PDR_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_PDR_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CHECKLIST_Q_AS">
+	    <properties.activemq destination="jms/CHECKLIST_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/LOG_SAPMessages_Q_AS">
+	    <properties.activemq destination="jms/LOG_SAPMessages" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/PERCORSI_EFFETTIVI_Q_AS">
+	    <properties.activemq destination="jms/PERCORSI_EFFETTIVI_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_ANAGR_SDC_Q_AS">
+	    <properties.activemq destination="jms/TCP_ANAGR_SDC_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_BLACKLIST_Q_AS">
+	    <properties.activemq destination="jms/TCP_BLACKLIST_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_CONF_Q_AS">
+	    <properties.activemq destination="jms/TCP_CONF_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_AGG_SDC_Q_AS">
+	    <properties.activemq destination="jms/TCP_AGG_SDC_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_BLACKLIST_INIBITA_Q_AS">
+	    <properties.activemq destination="jms/TCP_BLACKLIST_INIBITA_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_BP_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_BP_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_CONTRATTI_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_CONTRATTI_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ALTARES_STAMPINGS_Q_AS">
+	    <properties.activemq destination="jms/ALTARES_STAMPINGS_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/WFM_CONF_Q_AS">
+	    <properties.activemq destination="jms/WFM_CONF_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/ANAGR_CONTRATTI_PASSIVI_Q_AS">
+	    <properties.activemq destination="jms/ANAGR_CONTRATTI_PASSIVI_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/TCP_CONF_ISOLE_Q_AS">
+	    <properties.activemq destination="jms/TCP_CONF_ISOLE_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/GIS_ITINERARI_NOTE_Q_AS">
+	    <properties.activemq destination="jms/GIS_ITINERARI_NOTE_QInput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONF_ECOS_Q_AS">
+	    <properties.activemq destination="jms/CONF_ECOS_QOutput" destinationType="javax.jms.Queue" maxSessions="10"/>
+	</jmsActivationSpec>  
+	
+	<!-- TOPIC AS-->
+	  
+	<jmsActivationSpec id="jms/CONS_STATO_AS">
+	    <properties.activemq destination="jms/CONS_STATO" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_ODL_AS">
+	    <properties.activemq destination="jms/CONS_ODL" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_SEG_AS">
+	    <properties.activemq destination="jms/CONS_SEG" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_TRACKING_AS">
+	    <properties.activemq destination="jms/CONS_TRACKING" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_CHECKLIST_AS">
+	    <properties.activemq destination="jms/CONS_CHECKLIST" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_PESATA_AS">
+	    <properties.activemq destination="jms/CONS_PESATA" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_ANOM_AS">
+	    <properties.activemq destination="jms/CONS_ANOM" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_CONFERIMENTI_AS">
+	    <properties.activemq destination="jms/CONS_CONFERIMENTI" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_ECOSTATION_AS">
+	    <properties.activemq destination="jms/CONS_ECOSTATION" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>
+	<jmsActivationSpec id="jms/CONS_DOTAZIONI_AS">
+	    <properties.activemq destination="jms/CONS_DOTAZIONI" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	</jmsActivationSpec>  
 	
 	
 	<!--
@@ -561,7 +918,7 @@
    
 
     <enterpriseApplication id="WasteDeviceEAR" location="${server.config.dir}/apps/WasteDeviceEAR.ear" name="WasteDeviceEAR">
-    <classloader commonLibraryRef="OracleLib,WFMResource,properties"/> 
+    <classloader commonLibraryRef="postgresLib,WFMResource,properties"/> 
     </enterpriseApplication>
 
 
