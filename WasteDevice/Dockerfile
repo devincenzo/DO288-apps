@@ -22,11 +22,13 @@ COPY jvm.options /config/
 ADD WasteDeviceEAR.ear /opt/ibm/wlp/usr/servers/defaultServer/apps
 
 RUN mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/jmsLib && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/oraclejdbc && \
-    mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/properties && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/properties/sviluppo && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/lib && \
+    mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/postgresLib && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/properties && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/properties/sviluppo && mkdir /opt/ibm/wlp/usr/servers/defaultServer/resources/lib && \
 	mkdir /opt/ibm/wlp/usr/servers/defaultServer/BEAM && mkdir /opt/ibm/wlp/usr/servers/defaultServer/BEAM/logs 
 	
 	
-ADD --chown=1001:0 ./resources/oraclejdbc /opt/ibm/wlp/usr/servers/defaultServer/resources/oraclejdbc
+#ADD --chown=1001:0 ./resources/oraclejdbc /opt/ibm/wlp/usr/servers/defaultServer/resources/oraclejdbc
+
+ADD --chown=1001:0 ./resources/postgresLib /opt/ibm/wlp/usr/servers/defaultServer/resources/postgresLib
 
 ADD --chown=1001:0 ./resources/jmsLib /opt/ibm/wlp/usr/servers/defaultServer/resources/jmsLib
 
