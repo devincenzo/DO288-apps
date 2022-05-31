@@ -493,34 +493,34 @@
 	<!-- TOPIC AS-->
 	  
 	<jmsActivationSpec id="jms/CONS_STATO_AS">
-	    <properties.activemq destination="jms/CONS_STATO" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_STATO"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_ODL_AS">
-	    <properties.activemq destination="jms/CONS_ODL" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_ODL"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_SEG_AS">
-	    <properties.activemq destination="jms/CONS_SEG" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_SEG"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_TRACKING_AS">
-	    <properties.activemq destination="jms/CONS_TRACKING" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_TRACKING"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_CHECKLIST_AS">
-	    <properties.activemq destination="jms/CONS_CHECKLIST" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_CHECKLIST"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_PESATA_AS">
-	    <properties.activemq destination="jms/CONS_PESATA" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_PESATA"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_ANOM_AS">
-	    <properties.activemq destination="jms/CONS_ANOM" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_ANOM"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_CONFERIMENTI_AS">
-	    <properties.activemq destination="jms/CONS_CONFERIMENTI" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_CONFERIMENTI"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_ECOSTATION_AS">
-	    <properties.activemq destination="jms/CONS_ECOSTATION" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_ECOSTATION"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_DOTAZIONI_AS">
-	    <properties.activemq destination="jms/CONS_DOTAZIONI" clientId="CONS_STATO-1" destinationType="javax.jms.Topic" maxSessions="10"/>
+	    <properties.activemq destination="jms/CONS_DOTAZIONI"  destinationType="javax.jms.Topic" maxSessions="10"/>
 	</jmsActivationSpec>  
 	
 	
@@ -852,7 +852,7 @@
 	<!-- TOPIC AS-->
 	<!--
 	<jmsActivationSpec id="jms/CONS_STATO_AS">
-	    <properties.wmqJms channel="${QM_CHANNEL}" clientId="CONS_STATO-1" destinationRef="jms/CONS_STATO" destinationType="javax.jms.Topic" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" subscriptionDurability="Durable" subscriptionName="libertyServer" transportType="CLIENT"/>
+	    <properties.wmqJms channel="${QM_CHANNEL}"  destinationRef="jms/CONS_STATO" destinationType="javax.jms.Topic" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" subscriptionDurability="Durable" subscriptionName="libertyServer" transportType="CLIENT"/>
 	</jmsActivationSpec>
 	<jmsActivationSpec id="jms/CONS_ODL_AS">
 	    <properties.wmqJms channel="${QM_CHANNEL}" clientId="CONS_ODL-1" destinationRef="jms/CONS_ODL" destinationType="javax.jms.Topic" hostName="${QM_HOSTNAME}" maxPoolDepth="10" port="${QM_PORT}" queueManager="${QM_NAME}" subscriptionDurability="Durable" subscriptionName="libertyServer" transportType="CLIENT"/>
