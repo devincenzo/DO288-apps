@@ -60,9 +60,13 @@
     	<fileset dir="${server.config.dir}/resources/oraclejdbc" includes="*.jar" scanInterval="5s"/>
     </library>
     -->
-	 <library id="postgresLib">
-    	<fileset dir="${server.config.dir}/resources/postgresLib" id="PostgreSQLFileset" includes="*.jar" scanInterval="5s"/>
-    </library>
+	 <library id="postgresql-library">
+		<fileset
+			dir="${server.config.dir}/resources/postgresLib/"
+			id="PostgreSQLFileset"
+			includes="postgresql-42.2.19.jar" />
+	</library>
+	
     <library id="properties">
 		<folder dir="${server.config.dir}/resources/properties/sviluppo"/>
     </library> 
@@ -109,17 +113,17 @@
 	
 	<dataSource id="WASTES" jndiName="jdbc/WASTES">
 		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
-		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresLib"/>
+		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresql-library"/>
 		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
 	</dataSource>
 	
 	<dataSource id="DefaultDataSource">
 		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
-		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresLib"/>
+		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresql-library"/>
 		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
 	</dataSource>
 	
-	<jdbcDriver id="postgresql-driver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresLib"/>
+	<jdbcDriver id="postgresql-driver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresql-library"/>
 		
 	
 	<transaction clientInactivityTimeout="1800s" heuristicRetryInterval="0" heuristicRetryWait="0" propogatedOrBMTTranLifetimeTimeout="2700s" recoverOnStartup="true" totalTranLifetimeTimeout="2700s"/>
@@ -918,7 +922,7 @@
    
 
     <enterpriseApplication id="WasteDeviceEAR" location="${server.config.dir}/apps/WasteDeviceEAR.ear" name="WasteDeviceEAR">
-    <classloader commonLibraryRef="postgresLib,WFMResource,properties"/> 
+    <classloader commonLibraryRef="postgresql-library,WFMResource,properties"/> 
     </enterpriseApplication>
 
 
