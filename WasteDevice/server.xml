@@ -114,13 +114,15 @@
 	<dataSource id="WASTES" jndiName="jdbc/WASTES">
 		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
 		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresql-library"/>
-		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
+		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"
+		ssl="true" sslfactory="org.postgresql.ssl.DefaultJavaSSLFactory" sslMode="verify-ca" />
 	</dataSource>
 	
 	<dataSource id="DefaultDataSource">
 		<connectionManager maxPoolSize="100" minPoolSize="10" purgePolicy="FailingConnectionOnly"/>
 		<jdbcDriver jdbcDriverRef="postgresql-driver" libraryRef="postgresql-library"/>
-		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"/>
+		<properties.postgresql currentSchema="WASTES" databaseName="${DB_NAME}" password="${DB_PASSWORD}" portNumber="${DB_SERVER_PORT}" serverName="${DB_SERVER_NAME}" user="${DB_USER}"
+		ssl="true" sslfactory="org.postgresql.ssl.DefaultJavaSSLFactory" sslMode="verify-ca" />
 	</dataSource>
 	
 	<jdbcDriver id="postgresql-driver" javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource" javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="postgresql-library"/>
