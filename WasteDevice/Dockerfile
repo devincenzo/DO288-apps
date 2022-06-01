@@ -1,4 +1,4 @@
-FROM websphere-liberty:19.0.0.5-kernel
+FROM websphere-liberty:21.0.0.3-kernel-java8-ibmjava
 
 ARG REPOSITORIES_PROPERTIES=""
 
@@ -6,10 +6,10 @@ RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then mkdir /opt/ibm/wlp/etc/ \
   && echo $REPOSITORIES_PROPERTIES > /opt/ibm/wlp/etc/repositories.properties; fi \
   && installUtility install --acceptLicense \
     appSecurity-2.0 bluemixUtility-1.0 collectiveMember-1.0 ldapRegistry-3.0 \
-    localConnector-1.0 microProfile-1.0 microProfile-1.2 microProfile-1.3 microProfile-1.4 monitor-1.0 restConnector-1.0 \
+    localConnector-1.0  monitor-1.0 restConnector-1.0 \
     requestTiming-1.0 restConnector-2.0 sessionDatabase-1.0 sessionCache-1.0 ssl-1.0 transportSecurity-1.0 \
     webCache-1.0 webProfile-7.0 appSecurityClient-1.0 javaee-7.0 javaeeClient-7.0 jpa-2.0\
-	jms-2.0 ejbPersistentTimer-3.2 \
+	jms-2.0 \
   && if [ ! -z $REPOSITORIES_PROPERTIES ]; then rm /opt/ibm/wlp/etc/repositories.properties; fi \
   && rm -rf /output/workarea /output/logs \
   && chmod -R g+rwx /opt/ibm/wlp/output/*
