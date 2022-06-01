@@ -906,18 +906,18 @@
 
 <!--
     <enterpriseApplication id="WasteExtPortalEAR" location="WasteExtPortalEAR.ear" name="WasteExtPortalEAR">
-    <classloader commonLibraryRef="OracleLib,WFMResource,properties"/>   
+    <classloader commonLibraryRef="postgresql-library,WFMResource,properties"/>   
     </enterpriseApplication>
     -->
     
 
     <enterpriseApplication id="WastePortalEAR" location="WastePortalEAR.ear" name="WastePortalEAR">
-    <classloader commonLibraryRef="OracleLib,WFMResource,properties"/> 
+    <classloader commonLibraryRef="postgresql-library,WFMResource,properties"/> 
     </enterpriseApplication>
     
     <!--
     <enterpriseApplication id="WasteIntegrationEAR" location="WasteIntegrationEAR.ear" name="WasteIntegrationEAR">
-    <classloader commonLibraryRef="OracleLib,WFMResource,properties"/> 
+    <classloader commonLibraryRef="postgresql-library,WFMResource,properties"/> 
     </enterpriseApplication>
      -->
 	  
