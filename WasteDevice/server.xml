@@ -374,34 +374,34 @@
 	
 	<!--  TOPICS -->
 	 
-	<jmsTopic id="jms/CONS_STATO" jndiName="jms/CONS_STATO">
+	<jmsTopic id="jms/CONS_STATO" jndiName="CONS_STATO">
 	    <properties.activemq PhysicalName="CONS_STATO"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_ODL" jndiName="jms/CONS_ODL">
+	<jmsTopic id="jms/CONS_ODL" jndiName="CONS_ODL">
 	     <properties.activemq PhysicalName="CONS_ODL"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_SEG" jndiName="jms/CONS_SEG">
+	<jmsTopic id="jms/CONS_SEG" jndiName="CONS_SEG">
 	     <properties.activemq PhysicalName="CONS_SEG"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_TRACKING" jndiName="jms/CONS_TRACKING">
+	<jmsTopic id="jms/CONS_TRACKING" jndiName="CONS_TRACKING">
 	     <properties.activemq PhysicalName="CONS_TRACKING"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_CHECKLIST" jndiName="jms/CONS_CHECKLIST">
+	<jmsTopic id="jms/CONS_CHECKLIST" jndiName="CONS_CHECKLIST">
 	     <properties.activemq PhysicalName="CONS_CHECKLIST"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_PESATA" jndiName="jms/CONS_PESATA">
+	<jmsTopic id="jms/CONS_PESATA" jndiName="CONS_PESATA">
 	     <properties.activemq PhysicalName="CONS_PESATA"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_ANOM" jndiName="jms/CONS_ANOM">
+	<jmsTopic id="jms/CONS_ANOM" jndiName="CONS_ANOM">
 	     <properties.activemq PhysicalName="CONS_ANOM"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_CONFERIMENTI" jndiName="jms/CONS_CONFERIMENTI">
+	<jmsTopic id="jms/CONS_CONFERIMENTI" jndiName="CONS_CONFERIMENTI">
 	     <properties.activemq PhysicalName="CONS_CONFERIMENTI"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_DOTAZIONI" jndiName="jms/CONS_DOTAZIONI">
+	<jmsTopic id="jms/CONS_DOTAZIONI" jndiName="CONS_DOTAZIONI">
 	     <properties.activemq PhysicalName="CONS_DOTAZIONI"/>
 	</jmsTopic>
-	<jmsTopic id="jms/CONS_ECOSTATION" jndiName="jms/CONS_ECOSTATION">
+	<jmsTopic id="jms/CONS_ECOSTATION" jndiName="CONS_ECOSTATION">
 	     <properties.activemq PhysicalName="CONS_ECOSTATION"/>
 	</jmsTopic>   
 	
